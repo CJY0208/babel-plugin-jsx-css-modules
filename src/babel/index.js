@@ -1,6 +1,8 @@
 const defaultPrefer = 'local'
 const defaultStyleFileReg = [/\.(css|scss|sass|less)$/]
 
+let styleFileReg
+
 module.exports = function({ types: t, template }) {
   const classNameDecorator = {
     JSXAttribute: {
@@ -24,14 +26,34 @@ module.exports = function({ types: t, template }) {
         enter(
           path,
           {
-            opts: { prefer = defaultPrefer, styleFileReg = defaultStyleFileReg }
+            opts: {
+              prefer = defaultPrefer, 
+              styleFileReg: styleFileRegConfig = defaultStyleFileReg
+            }
           }
         ) {
+
+          if (!styleFileReg) {
+            styleFileReg = styleFileRegConfig
+              .map(reg => {
+                if (Object.prototype.toString.call(reg) === '[object RegExp]') {
+                  return reg
+                }
+
+                if (typeof reg === 'string') {
+                  return new RegExp(reg)
+                }
+
+                return undefined
+              })
+              .filter(reg => !!reg)
+          }
+
           // 筛出样式文件的引入语句
           const styleImportDeclarations = path.node.body.filter(
             node =>
               t.isImportDeclaration(node) &&
-              new RegExp(styleFileReg).some(reg => reg.test(node.source.value))
+              styleFileReg.some(reg => reg.test(node.source.value))
           )
 
           // 若无样式导入则不执行余下步骤

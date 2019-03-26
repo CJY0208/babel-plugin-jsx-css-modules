@@ -1,6 +1,6 @@
 # babel-plugin-jsx-css-modules
 
-通过 `Babel` 实现 `jsx` 中无感知使用 [cssModules](https://github.com/css-modules/css-modules)
+通过 `Babel` 实现 `jsx` 中**无感知**使用 [cssModules](https://github.com/css-modules/css-modules)
 
 不需要显示调用 `styles` 变量或自定义 `props` 如 `styleName`
 
@@ -25,10 +25,13 @@
       ]
     }
     ```
+3. 调整构建配置以启用 cssModules 功能
+
+    未启用 cssModules 功能的样式文件不会有效果
 
 - - -
 
-## 基础示例
+## 示例
 
 ```javascript
 import './styles.module.scss'
@@ -56,7 +59,7 @@ const Example = () => (
 )
 ```
 
-以上是对该工具运作方式的简单解释，实际上，`matcher` 函数还可辅助完成对全局样式的挑选，参考如下示例
+以上是对该工具运作方式的简单解释，实际上，`matcher` 函数还可完成对全局样式的甄选，参考如下示例
 
 - - -
 
@@ -69,10 +72,12 @@ const Example = () => (
 ```javascript
 import './styles.module.scss'
 
-const Example = ({ customerClassName }) => (
-  <div>
-    <div className=":global(global-class-1 global-class-2) :local(module-class-1 module-class-2) rest-class-1 rest-class-2">Example</div>
-  </div>
+const Example = () => (
+  <div className={`
+    :global(global_1 global_2) 
+    :local(module_1 module_2) 
+    rest_1 rest_2
+  `}>Example</div>
 )
 ```
 
@@ -100,3 +105,28 @@ const Example = ({ customerClassName }) => (
 | styleFileReg | `Array` of `RegExp` | `[/\.(css\|scss\|sass\|less)$/]` | 用以匹配需要处理的 css 模块文件
 | prefer | `String` | `'local'` | 声明未修饰的类名归属于何种类型，取值为 `'local'` 或 `'global'`
 
+- - -
+
+## 注意事项
+
+当存在多个 `cssModules` 样式文件时，若文件内存在同名模块，则只会保留最后被引用文件内的模块
+
+```scss
+// style1.module.scss
+.test {
+  color: red;
+}
+
+// style2.module.scss
+.test {
+  color: blue;
+}
+```
+```javascript
+import './style1.module.scss'
+import './style2.module.scss'
+
+const Example = () => (
+  <div className="test">我将会是蓝色的</div>
+)
+```
