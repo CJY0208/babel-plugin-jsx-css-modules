@@ -31,7 +31,7 @@ module.exports = function({ types: t, template }) {
           const styleImportDeclarations = path.node.body.filter(
             node =>
               t.isImportDeclaration(node) &&
-              styleFileReg.some(reg => reg.test(node.source.value))
+              new RegExp(styleFileReg).some(reg => reg.test(node.source.value))
           )
 
           // 若无样式导入则不执行余下步骤

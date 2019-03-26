@@ -82,6 +82,19 @@ const Example = ({ customerClassName }) => (
 
 ## 配置项
 
+```json
+{
+  "plugins": [
+    ["jsx-css-modules", {
+      "styleFileReg": [
+        "\\.(css|scss|sass|less)$"
+      ],
+      "prefer": "local"
+    }]
+  ]
+}
+```
+
 | 名称 | 类型 | 默认值 | 描述
 | - | - | - | -
 | styleFileReg | `Array` of `RegExp` | `[/\.(css\|scss\|sass\|less)$/]` | 用以匹配需要处理的 css 模块文件

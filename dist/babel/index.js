@@ -33,7 +33,7 @@ module.exports = function (_ref) {
 
           // 筛出样式文件的引入语句
           var styleImportDeclarations = path.node.body.filter(function (node) {
-            return t.isImportDeclaration(node) && styleFileReg.some(function (reg) {
+            return t.isImportDeclaration(node) && new RegExp(styleFileReg).some(function (reg) {
               return reg.test(node.source.value);
             });
           });
