@@ -25,9 +25,9 @@
       ]
     }
     ```
-3. 调整构建配置以启用 cssModules 功能
+3. 调整构建配置以启用 `cssModules` 功能
 
-    未启用 cssModules 功能的样式文件不会有效果
+    未启用 `cssModules` 功能的样式文件不会有效果
 
 - - -
 
