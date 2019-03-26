@@ -70,7 +70,7 @@ module.exports = function({ types: t, template }) {
 
           lastStyleImportDeclarationPath.insertAfter(
             template(`
-              const ${getMatcherIndentifier.name} = require('jsx-css-modules/helpers').getMatcher;
+              const ${getMatcherIndentifier.name} = require('babel-plugin-jsx-css-modules/helpers').getMatcher;
               const ${
                 mergedStyleIdentifier.name
               } = Object.assign({}, ${defaultStyleIdentifiers

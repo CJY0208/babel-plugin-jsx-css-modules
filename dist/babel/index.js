@@ -67,7 +67,7 @@ module.exports = function (_ref) {
           var lastStyleImportDeclarationPath = path.get('body.' + path.node.body.indexOf(lastStyleImportDeclaration));
           var getMatcherIndentifier = path.scope.generateUidIdentifier('getMatcher');
 
-          lastStyleImportDeclarationPath.insertAfter(template('\n              const ' + getMatcherIndentifier.name + ' = require(\'jsx-css-modules/helpers\').getMatcher;\n              const ' + mergedStyleIdentifier.name + ' = Object.assign({}, ' + defaultStyleIdentifiers.map(function (node) {
+          lastStyleImportDeclarationPath.insertAfter(template('\n              const ' + getMatcherIndentifier.name + ' = require(\'babel-plugin-jsx-css-modules/helpers\').getMatcher;\n              const ' + mergedStyleIdentifier.name + ' = Object.assign({}, ' + defaultStyleIdentifiers.map(function (node) {
             return node.name;
           }).join(', ') + ');\n              const ' + matcherIdentifier.name + ' = ' + getMatcherIndentifier.name + '(' + mergedStyleIdentifier.name + ', \'' + prefer + '\');\n            ')());
 

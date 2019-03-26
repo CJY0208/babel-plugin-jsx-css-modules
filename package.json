@@ -1,20 +1,24 @@
 {
-  "name": "jsx-css-modules",
+  "name": "babel-plugin-jsx-css-modules",
   "version": "0.0.1",
   "description": "通过 Babel 实现 jsx 中无感知使用 cssModules",
-  "main": "helpers.js",
+  "main": "index.js",
   "scripts": {
     "build": "rollup --config"
   },
   "keywords": [
-    "scroll"
+    "css modules",
+    "cssModules",
+    "jsx",
+    "babel",
+    "babel-plugin"
   ],
   "author": "CJY0208",
   "license": "ISC",
-  "homepage": "https://github.com/CJY0208/jsx-css-modules",
+  "homepage": "https://github.com/CJY0208/babel-plugin-jsx-css-modules",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CJY0208/jsx-css-modules.git"
+    "url": "git+https://github.com/CJY0208/babel-plugin-jsx-css-modules.git"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
