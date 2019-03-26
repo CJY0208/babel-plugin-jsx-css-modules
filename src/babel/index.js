@@ -70,14 +70,13 @@ module.exports = function({ types: t, template }) {
 
           lastStyleImportDeclarationPath.insertAfter(
             template(`
-              import { ${getMatcherIndentifier.name} } from 'jsx-css-modules/helpers
+              const ${getMatcherIndentifier.name} = require('jsx-css-modules/helpers').getMatcher;
               const ${
                 mergedStyleIdentifier.name
               } = Object.assign({}, ${defaultStyleIdentifiers
               .map(node => node.name)
               .join(', ')});
-
-              const ${matcherIdentifier.name} = ${getMatcherIndentifier.name}(${mergedStyleIdentifier.name}, '${prefer}')
+              const ${matcherIdentifier.name} = ${getMatcherIndentifier.name}(${mergedStyleIdentifier.name}, '${prefer}');
             `)()
           )
 

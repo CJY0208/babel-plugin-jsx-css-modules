@@ -8,11 +8,11 @@
     return function (classNames) {
       var globalClassNames = [];
       var localClassNames = [];
-      var restClassNames = classNames.replace(/:global\\([\\s\\S]*?\\)/g, function (text) {
-        globalClassNames = globalClassNames.concat(text.trim().replace(/(:global\\(|\\))/g, '').split(' '));
+      var restClassNames = classNames.replace(/:global\([\s\S]*?\)/g, function (text) {
+        globalClassNames = globalClassNames.concat(text.trim().replace(/(:global\(|\))/g, '').split(' '));
         return '';
-      }).replace(/:local\\([\\s\\S]*?\\)/g, function (text) {
-        localClassNames = localClassNames.concat(text.trim().replace(/(:local\\(|\\))/g, '').split(' '));
+      }).replace(/:local\([\s\S]*?\)/g, function (text) {
+        localClassNames = localClassNames.concat(text.trim().replace(/(:local\(|\))/g, '').split(' '));
         return '';
       }).trim().split(' ');
 

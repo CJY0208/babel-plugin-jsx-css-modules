@@ -6,9 +6,8 @@ export default [
   {
     input: 'src/babel/index.js',
     output: {
-      name: 'JsxCssModulesBabelPlugin',
       file: 'dist/babel/index.js',
-      format: 'umd'
+      format: 'cjs'
     },
     plugins: [
       resolve(),

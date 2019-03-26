@@ -2,20 +2,20 @@ export const getMatcher = (styles, prefer) => classNames => {
   let globalClassNames = []
   let localClassNames = []
   let restClassNames = classNames
-    .replace(/:global\\([\\s\\S]*?\\)/g, text => {
+    .replace(/:global\([\s\S]*?\)/g, text => {
       globalClassNames = globalClassNames.concat(
         text
           .trim()
-          .replace(/(:global\\(|\\))/g, '')
+          .replace(/(:global\(|\))/g, '')
           .split(' ')
       )
       return ''
     })
-    .replace(/:local\\([\\s\\S]*?\\)/g, text => {
+    .replace(/:local\([\s\S]*?\)/g, text => {
       localClassNames = localClassNames.concat(
         text
           .trim()
-          .replace(/(:local\\(|\\))/g, '')
+          .replace(/(:local\(|\))/g, '')
           .split(' ')
       )
       return ''
