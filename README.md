@@ -13,7 +13,7 @@
 1. 安装插件
 
     ```bash
-    npm install jsx-css-modules --save
+    npm install babel-plugin-jsx-css-modules --save
     ```
 
 2. 配置 `.babelrc` 文件
@@ -21,7 +21,7 @@
     ```json
     {
       "plugins": [
-        "jsx-css-modules/babel"
+        "jsx-css-modules"
       ]
     }
     ```
