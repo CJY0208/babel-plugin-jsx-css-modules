@@ -1,4 +1,4 @@
-# jsx-css-modules
+# babel-plugin-jsx-css-modules
 
 通过 `Babel` 实现 `jsx` 中无感知使用 [cssModules](https://github.com/css-modules/css-modules)
 
