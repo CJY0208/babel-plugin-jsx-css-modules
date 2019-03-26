@@ -3,8 +3,6 @@
 var defaultPrefer = 'local';
 var defaultStyleFileReg = [/\.(css|scss|sass|less)$/];
 
-var styleFileReg = void 0;
-
 module.exports = function (_ref) {
   var t = _ref.types,
       template = _ref.template;
@@ -31,24 +29,23 @@ module.exports = function (_ref) {
               _ref2$opts$prefer = _ref2$opts.prefer,
               prefer = _ref2$opts$prefer === undefined ? defaultPrefer : _ref2$opts$prefer,
               _ref2$opts$styleFileR = _ref2$opts.styleFileReg,
-              styleFileRegConfig = _ref2$opts$styleFileR === undefined ? defaultStyleFileReg : _ref2$opts$styleFileR;
+              styleFileReg = _ref2$opts$styleFileR === undefined ? defaultStyleFileReg : _ref2$opts$styleFileR;
 
 
-          if (!styleFileReg) {
-            styleFileReg = styleFileRegConfig.map(function (reg) {
-              if (Object.prototype.toString.call(reg) === '[object RegExp]') {
-                return reg;
-              }
+          // 初始化检测样式文件的正则表达式
+          styleFileReg = styleFileReg.map(function (reg) {
+            if (Object.prototype.toString.call(reg) === '[object RegExp]') {
+              return reg;
+            }
 
-              if (typeof reg === 'string') {
-                return new RegExp(reg);
-              }
+            if (typeof reg === 'string') {
+              return new RegExp(reg);
+            }
 
-              return undefined;
-            }).filter(function (reg) {
-              return !!reg;
-            });
-          }
+            return undefined;
+          }).filter(function (reg) {
+            return !!reg;
+          });
 
           // 筛出样式文件的引入语句
           var styleImportDeclarations = path.node.body.filter(function (node) {

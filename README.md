@@ -4,7 +4,7 @@
 
 不需要显示调用 `styles` 变量或自定义 `props` 如 `styleName`
 
-**目前仅支持 Babel 6**
+**目前仅测试了 Babel 6，未对 Babel 7 做测试**
 
 - - -
 
@@ -27,7 +27,13 @@
     ```
 3. 调整构建配置以启用 `cssModules` 功能
 
-    未启用 `cssModules` 功能的样式文件不会有效果
+    启用方式可参考：
+
+    - https://github.com/css-modules/css-modules#implementations    
+    - https://github.com/webpack-contrib/css-loader#modules
+    - https://github.com/css-modules/postcss-modules
+
+    **注意：未启用 `cssModules` 功能的样式文件不会有效果**
 
 - - -
 
@@ -44,14 +50,14 @@ const Example = ({ customerClassName }) => (
 )
 ```
 
-以上将转化为
+将转化为
 
 ```javascript
 import styles from  './styles.module.scss'
 const matcher = classNames => 
   classNames.split(' ').map(className => styles[className] || className).join(' ')
 
-const Example = () => (
+const Example = ({ customerClassName }) => (
   <div>
     <div className={matcher('module-class-name')}>Example</div>
     <div className={matcher(customerClassName)}>Example</div>
@@ -59,29 +65,31 @@ const Example = () => (
 )
 ```
 
-以上是对该工具运作方式的简单解释，实际上，`matcher` 函数还可完成对全局样式的甄选，参考如下示例
+以上是对该工具运作方式的简单解释，实际上，`matcher` 函数还可完成对全局样式的甄选，参考如下说明
 
 - - -
 
-## 使用 `:global` / `:local` 修饰符以区分全局、局部样式
+## 使用 `:global` / `:local` 修饰器以区分全局、局部样式
 
-依照 [cssModules 规则](https://github.com/css-modules/css-modules#exceptions)，在类名上拓展了 `:global` / `:local` 修饰符语法，以区分全局、局部样式
+依照 [cssModules 规则](https://github.com/css-modules/css-modules#exceptions)，在类名上拓展了 `:global` / `:local` 修饰器语法，以区分全局、局部样式
 
-未添加修饰符的类名默认属于 `:local` 样式，此行为通过 `prefer` 参数修改
+未添加修饰器的类名默认属于 `:local` 样式，此行为通过 `prefer` 参数修改
 
 ```javascript
 import './styles.module.scss'
 
 const Example = () => (
   <div className={`
-    :global(global_1 global_2) 
-    :local(module_1 module_2) 
-    rest_1 rest_2
-  `}>Example</div>
+      :global(global_1 global_2) 
+      :local(module_1 module_2) 
+      rest_1 rest_2
+    `}>
+    Example
+  </div>
 )
 ```
 
-**注意：不要嵌套使用修饰符**，不支持形如 `:global(xxx :global(yyy zzz) aaa)` 的使用方式
+**注意：不支持嵌套使用修饰器**，不支持形如 `:global(xxx :global(yyy zzz) aaa)` 的使用方式
 
 - - -
 

@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-jsx-css-modules",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "通过 Babel 实现 jsx 中无感知使用 cssModules",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,8 @@
     "css modules",
     "cssModules",
     "jsx",
+    "className",
+    "styleName",
     "babel",
     "babel-plugin"
   ],

@@ -1,8 +1,6 @@
 const defaultPrefer = 'local'
 const defaultStyleFileReg = [/\.(css|scss|sass|less)$/]
 
-let styleFileReg
-
 module.exports = function({ types: t, template }) {
   const classNameDecorator = {
     JSXAttribute: {
@@ -28,26 +26,25 @@ module.exports = function({ types: t, template }) {
           {
             opts: {
               prefer = defaultPrefer, 
-              styleFileReg: styleFileRegConfig = defaultStyleFileReg
+              styleFileReg = defaultStyleFileReg
             }
           }
         ) {
+          
+          // 初始化检测样式文件的正则表达式
+          styleFileReg = styleFileReg
+            .map(reg => {
+              if (Object.prototype.toString.call(reg) === '[object RegExp]') {
+                return reg
+              }
 
-          if (!styleFileReg) {
-            styleFileReg = styleFileRegConfig
-              .map(reg => {
-                if (Object.prototype.toString.call(reg) === '[object RegExp]') {
-                  return reg
-                }
+              if (typeof reg === 'string') {
+                return new RegExp(reg)
+              }
 
-                if (typeof reg === 'string') {
-                  return new RegExp(reg)
-                }
-
-                return undefined
-              })
-              .filter(reg => !!reg)
-          }
+              return undefined
+            })
+            .filter(reg => !!reg)
 
           // 筛出样式文件的引入语句
           const styleImportDeclarations = path.node.body.filter(
