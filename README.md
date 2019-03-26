@@ -84,6 +84,6 @@ const Example = ({ customerClassName }) => (
 
 | 名称 | 类型 | 默认值 | 描述
 | - | - | - | -
-| styleFileReg | `Array` of `RegExp` | `[/\.(css|scss|sass|less)$/]` | 用以匹配需要处理的 css 模块文件
+| styleFileReg | `Array` of `RegExp` | `[/\.(css\|scss\|sass\|less)$/]` | 用以匹配需要处理的 css 模块文件
 | prefer | `String` | `'local'` | 声明未修饰的类名归属于何种类型，取值为 `'local'` 或 `'global'`
 
