@@ -2,7 +2,7 @@
 
 通过 `Babel` 实现 `jsx` 中**无感知**使用 [cssModules](https://github.com/css-modules/css-modules)
 
-不需要显示调用 `styles` 变量或自定义 `props` 如 `styleName`
+不需要显式调用 `styles` 变量或自定义 `props` 如 `styleName`
 
 **目前仅测试了 Babel 6，未对 Babel 7 做测试**
 
