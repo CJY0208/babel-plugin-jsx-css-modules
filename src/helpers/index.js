@@ -29,5 +29,6 @@ export const getMatcher = (styles, prefer) => classNames => {
   return localClassNames
     .map(className => styles[className] || className)
     .concat(globalClassNames)
+    .trim()
     .join(' ')
 }
