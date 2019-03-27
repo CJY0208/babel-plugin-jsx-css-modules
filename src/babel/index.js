@@ -18,33 +18,29 @@ module.exports = function({ types: t, template }) {
   }
 
   return {
-    pre({
-      opts: { prefer = defaultPrefer, styleFileReg = defaultStyleFileReg }
-    }) {
-      this.prefer = prefer
-      // 初始化检测样式文件的正则表达式
-      this.styleFileReg = styleFileReg
-        .map(reg => {
-          if (Object.prototype.toString.call(reg) === '[object RegExp]') {
-            return reg
-          }
-
-          if (typeof reg === 'string') {
-            return new RegExp(reg)
-          }
-
-          return undefined
-        })
-        .filter(reg => !!reg)
-    },
     visitor: {
       Program: {
-        enter(path) {
+        enter(path, { opts: { prefer = defaultPrefer, styleFileReg = defaultStyleFileReg } }) {
+          // 初始化检测样式文件的正则表达式
+          styleFileReg = styleFileReg
+            .map(reg => {
+              if (Object.prototype.toString.call(reg) === '[object RegExp]') {
+                return reg
+              }
+
+              if (typeof reg === 'string') {
+                return new RegExp(reg)
+              }
+
+              return undefined
+            })
+            .filter(reg => !!reg)
+
           // 筛出样式文件的引入语句，若无样式导入则不执行余下步骤
           const styleImports = path.node.body.filter(
             node =>
               t.isImportDeclaration(node) &&
-              this.styleFileReg.some(reg => reg.test(node.source.value))
+              styleFileReg.some(reg => reg.test(node.source.value))
           )
           if (styleImports.length === 0) {
             return
@@ -72,12 +68,12 @@ module.exports = function({ types: t, template }) {
           const lastStyleImportDeclaration = styleImports[styleImports.length - 1]
           const lastStyleImportDeclarationPath = path.get(
             `body.${path.node.body.indexOf(lastStyleImportDeclaration)}`
-          )      
+          )
           lastStyleImportDeclarationPath.insertAfter(
             template(`
               const ${getMatcher.name} = require('babel-plugin-jsx-css-modules/helpers').getMatcher;
               const ${mergedStyle.name} = Object.assign({}, ${defaultStyles.map(node => node.name).join(', ')});
-              const ${matcher.name} = ${getMatcher.name}(${mergedStyle.name}, '${this.prefer}');
+              const ${matcher.name} = ${getMatcher.name}(${mergedStyle.name}, '${prefer}');
             `)()
           )
 

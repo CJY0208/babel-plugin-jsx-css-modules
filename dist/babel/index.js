@@ -19,38 +19,33 @@ module.exports = function (_ref) {
   };
 
   return {
-    pre: function pre(_ref2) {
-      var _ref2$opts = _ref2.opts,
-          _ref2$opts$prefer = _ref2$opts.prefer,
-          prefer = _ref2$opts$prefer === undefined ? defaultPrefer : _ref2$opts$prefer,
-          _ref2$opts$styleFileR = _ref2$opts.styleFileReg,
-          styleFileReg = _ref2$opts$styleFileR === undefined ? defaultStyleFileReg : _ref2$opts$styleFileR;
-
-      this.prefer = prefer;
-      // 初始化检测样式文件的正则表达式
-      this.styleFileReg = styleFileReg.map(function (reg) {
-        if (Object.prototype.toString.call(reg) === '[object RegExp]') {
-          return reg;
-        }
-
-        if (typeof reg === 'string') {
-          return new RegExp(reg);
-        }
-
-        return undefined;
-      }).filter(function (reg) {
-        return !!reg;
-      });
-    },
-
     visitor: {
       Program: {
-        enter: function enter(path) {
-          var _this = this;
+        enter: function enter(path, _ref2) {
+          var _ref2$opts = _ref2.opts,
+              _ref2$opts$prefer = _ref2$opts.prefer,
+              prefer = _ref2$opts$prefer === undefined ? defaultPrefer : _ref2$opts$prefer,
+              _ref2$opts$styleFileR = _ref2$opts.styleFileReg,
+              styleFileReg = _ref2$opts$styleFileR === undefined ? defaultStyleFileReg : _ref2$opts$styleFileR;
+
+          // 初始化检测样式文件的正则表达式
+          styleFileReg = styleFileReg.map(function (reg) {
+            if (Object.prototype.toString.call(reg) === '[object RegExp]') {
+              return reg;
+            }
+
+            if (typeof reg === 'string') {
+              return new RegExp(reg);
+            }
+
+            return undefined;
+          }).filter(function (reg) {
+            return !!reg;
+          });
 
           // 筛出样式文件的引入语句，若无样式导入则不执行余下步骤
           var styleImports = path.node.body.filter(function (node) {
-            return t.isImportDeclaration(node) && _this.styleFileReg.some(function (reg) {
+            return t.isImportDeclaration(node) && styleFileReg.some(function (reg) {
               return reg.test(node.source.value);
             });
           });
@@ -81,7 +76,7 @@ module.exports = function (_ref) {
           var lastStyleImportDeclarationPath = path.get('body.' + path.node.body.indexOf(lastStyleImportDeclaration));
           lastStyleImportDeclarationPath.insertAfter(template('\n              const ' + getMatcher.name + ' = require(\'babel-plugin-jsx-css-modules/helpers\').getMatcher;\n              const ' + mergedStyle.name + ' = Object.assign({}, ' + defaultStyles.map(function (node) {
             return node.name;
-          }).join(', ') + ');\n              const ' + matcher.name + ' = ' + getMatcher.name + '(' + mergedStyle.name + ', \'' + this.prefer + '\');\n            ')());
+          }).join(', ') + ');\n              const ' + matcher.name + ' = ' + getMatcher.name + '(' + mergedStyle.name + ', \'' + prefer + '\');\n            ')());
 
           // 遍历替换文件中的 className
           path.traverse(classNameDecorator, {
