@@ -28,7 +28,7 @@
 
       return localClassNames.map(function (className) {
         return styles[className] || className;
-      }).concat(globalClassNames).trim().join(' ');
+      }).concat(globalClassNames).join(' ').trim();
     };
   };
 
