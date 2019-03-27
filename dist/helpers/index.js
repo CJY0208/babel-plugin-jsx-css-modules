@@ -4,17 +4,21 @@
   (factory((global.JsxCssModulesHelper = {})));
 }(this, (function (exports) { 'use strict';
 
+  var splitString = function splitString(string) {
+    return string.trim().split(' ');
+  };
+
   var getMatcher = function getMatcher(styles, prefer) {
     return function (classNames) {
       var globalClassNames = [];
       var localClassNames = [];
-      var restClassNames = classNames.replace(/:global\([\s\S]*?\)/g, function (text) {
-        globalClassNames = globalClassNames.concat(text.trim().replace(/(:global\(|\))/g, '').split(' '));
+      var restClassNames = splitString(classNames.replace(/\s{2,}/g, ' ').replace(/:global\([\s\S]*?\)/g, function (text) {
+        globalClassNames = globalClassNames.concat(splitString(text.replace(/(:global\(|\))/g, '')));
         return '';
       }).replace(/:local\([\s\S]*?\)/g, function (text) {
-        localClassNames = localClassNames.concat(text.trim().replace(/(:local\(|\))/g, '').split(' '));
+        localClassNames = localClassNames.concat(splitString(text.replace(/(:local\(|\))/g, '')));
         return '';
-      }).trim().split(' ');
+      }));
 
       if (prefer === 'local') {
         localClassNames = localClassNames.concat(restClassNames);
@@ -24,7 +28,7 @@
 
       return localClassNames.map(function (className) {
         return styles[className] || className;
-      }).concat(globalClassNames).join(' ').trim();
+      }).concat(globalClassNames).join(' ');
     };
   };
 

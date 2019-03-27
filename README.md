@@ -69,7 +69,7 @@ const Example = ({ customerClassName }) => (
 
 - - -
 
-## 使用 `:global` / `:local` 修饰器以区分全局、局部样式
+## 区分全局、局部样式
 
 依照 [cssModules 规则](https://github.com/css-modules/css-modules#exceptions)，在类名上拓展了 `:global` / `:local` 修饰器语法，以区分全局、局部样式
 
@@ -138,3 +138,47 @@ const Example = () => (
   <div className="test">我将会是蓝色的</div>
 )
 ```
+
+- - -
+
+### 可选待办事项
+
+考虑到插件功能关注点不同，目前不太清楚是否有必要支持如下两种、或更多可能性的书写方式，可以在 issue 中交流
+
+若添加如下特性，插件有可能需要进行更名，含义类似于 `className-all-in-one` 或 `jsx-className-expansion`
+
+- [x] ~~无感知使用 `CSS Modules`~~
+- [ ] 兼容 `styleName`（`prefer` 选项固定为 `'global'`）
+- [ ] 无感知集成 [classnames](https://github.com/JedWatson/classnames) 功能，示例如下
+
+    ```javascript
+    const Example = () => (
+      <div>
+        <span
+          className={{
+            xxx: true,
+            yyy: false
+          }}
+        />
+        <span
+          className={[
+            'zzz',
+            {
+              xxx: 1,
+              yyy: 0
+            }
+          ]}
+        />
+      </div>
+    )
+    ```
+
+- - -
+
+### 参考资料或辅助工具
+
+- [手把手教你开发一个 babel-plugin](https://segmentfault.com/a/1190000016459270)
+- [Babel 插件手册](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md)
+- [@babel/types](https://babeljs.io/docs/en/babel-types)
+- [AST Explorer](https://astexplorer.net/)
+
