@@ -10,6 +10,10 @@
 
   var getMatcher = function getMatcher(styles, prefer) {
     return function (classNames) {
+      if (typeof classNames !== 'string') {
+        return null;
+      }
+
       var globalClassNames = [];
       var localClassNames = [];
       var restClassNames = splitString(classNames.replace(/\s{2,}/g, ' ').replace(/:global\([\s\S]*?\)/g, function (text) {

@@ -1,6 +1,10 @@
 const splitString = string => string.trim().split(' ')
 
 export const getMatcher = (styles, prefer) => classNames => {
+  if (typeof classNames !== 'string') {
+    return null
+  }
+
   let globalClassNames = []
   let localClassNames = []
   let restClassNames = splitString(

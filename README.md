@@ -6,7 +6,7 @@
 
 **需确保已启用 CSS Modules 功能**
 
-**仅测试了 Babel 6，未测试 Babel 7**
+**Babel 6/7 均可用**
 
 - - -
 
