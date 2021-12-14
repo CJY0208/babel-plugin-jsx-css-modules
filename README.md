@@ -104,7 +104,8 @@ const Example = () => (
       "styleFileReg": [
         "\\.(css|scss|sass|less)$"
       ],
-      "prefer": "local"
+      "prefer": "local",
+      "helperImportType": "cjs"
     }]
   ]
 }
@@ -114,6 +115,7 @@ const Example = () => (
 | - | - | - | -
 | styleFileReg | `Array` of `RegExp` | `[/\.(css\|scss\|sass\|less)$/]` | 用以匹配需要处理的 css 模块文件
 | prefer | `String` | `'local'` | 声明未修饰的类名归属于何种类型，取值为 `'local'` 或 `'global'`
+| helperImportType | `String` | `'cjs'` | 声明辅助函数的导入方式，取值为 `'cjs'` 或 `'esm'`
 
 - - -
 
