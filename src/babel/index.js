@@ -20,7 +20,7 @@ module.exports = function({ types: t, template }) {
   return {
     visitor: {
       Program: {
-        enter(path, { opts: { prefer = defaultPrefer, styleFileReg = defaultStyleFileReg } }) {
+        enter(path, { opts: { prefer = defaultPrefer, styleFileReg = defaultStyleFileReg, helperImportType = 'cjs' } }) {
           // 初始化检测样式文件的正则表达式
           styleFileReg = styleFileReg
             .map(reg => {
@@ -71,7 +71,10 @@ module.exports = function({ types: t, template }) {
           )
           lastStyleImportDeclarationPath.insertAfter(
             template(`
-              const ${getMatcher.name} = require('babel-plugin-jsx-css-modules/helpers').getMatcher;
+              ${{
+                cjs: `const ${getMatcher.name} = require('babel-plugin-jsx-css-modules/helpers').getMatcher;`,
+                esm: `import { getMatcher as ${getMatcher.name} } from 'babel-plugin-jsx-css-modules/helpers';`
+              }[helperImportType] || ''}
               const ${mergedStyle.name} = Object.assign({}, ${defaultStyles.map(node => node.name).join(', ')});
               const ${matcher.name} = ${getMatcher.name}(${mergedStyle.name}, '${prefer}');
             `)()

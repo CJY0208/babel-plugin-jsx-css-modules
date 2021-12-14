@@ -16,6 +16,9 @@
     "babel",
     "babel-plugin"
   ],
+  "files": [
+    "dist"
+  ],
   "author": "CJY0208",
   "license": "ISC",
   "homepage": "https://github.com/CJY0208/babel-plugin-jsx-css-modules",
